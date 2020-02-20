@@ -1,5 +1,6 @@
 package br.com.otta.enterpriseClient;
 
+import java.util.Collection;
 import java.util.Scanner;
 
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import br.com.otta.enterpriseApi.model.Enterprise;
 import br.com.otta.enterpriseClient.service.EnterpriseService;
 
 @SpringBootApplication
@@ -44,8 +46,10 @@ public class EnterpriseClientApplication implements CommandLineRunner {
                 createEnterprise();
                 break;
             case 2:
+                updateEnterprise();
                 break;
             case 3:
+                printAllEnterprises();
                 break;
             case 4:
                 System.out.println("Encerrando aplicação.");
@@ -73,11 +77,34 @@ public class EnterpriseClientApplication implements CommandLineRunner {
         long id = scanner.nextLong();
         System.out.println("Nome da empresa:");
         String name = scanner.next();
+        name += scanner.nextLine();
         System.out.println("Tipo da empresa:");
         int typeId = scanner.nextInt();
 
         service.create(id, name, typeId);
         System.out.println("Empresa criada na Aplicação.");
+    }
+
+    private void updateEnterprise() {
+        System.out.println("Atualizar uma empresa.");
+        System.out.println("Código da empresa para editar:");
+        long id = scanner.nextLong();
+        System.out.println("Novo nome da empresa:");
+        String name = scanner.next();
+        name += scanner.nextLine();
+        System.out.println("Novo tipo da empresa:");
+        int typeId = scanner.nextInt();
+
+        service.update(id, name, typeId);
+        System.out.println("Empresa atualizada na Aplicação.");
+    }
+
+    private void printAllEnterprises() {
+        Collection<Enterprise> enterpriseCollection = service.listAllEnterprises();
+        String message = String.format("Empresas salvas na aplicação: %s.", enterpriseCollection.size());
+
+        System.out.println(message);
+        enterpriseCollection.stream().forEach(enterprise -> System.out.println(enterprise));
     }
 
 }

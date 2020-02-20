@@ -20,14 +20,7 @@ public class ClientConfiguration {
     }
 
     @Bean
-    public Client clientBuilder(ClientBuilder builder) {
-        return builder.newClient();
-    }
-
-    @Bean
-    public ClientBuilder jerseyClientBuilder() {
-        ClientBuilder builder = ClientBuilder.newBuilder();
-
-        return builder;
+    public Client clientBuilder() {
+        return ClientBuilder.newClient();
     }
 }

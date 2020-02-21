@@ -25,8 +25,8 @@ public class ClientConfiguration {
     }
 
     @Bean
-    public Client clientBuilder() {
-        return ClientBuilder.newClient();
+    public Client clientBuilder(ClientConfig clientConfig) {
+        return ClientBuilder.newClient(clientConfig);
     }
 
     @Bean
